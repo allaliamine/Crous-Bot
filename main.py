@@ -4,14 +4,17 @@ import warnings
 import os
 from telegram_bot import start_bot
 
+from datetime import datetime
 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 warnings.filterwarnings("ignore")
 
 if __name__ == "__main__":
-    start_bot()
     while True:
+        current_datetime = datetime.now()
+        current_time = current_datetime.strftime("%H:%M:%S")
+        print("bot runned at :", current_time)
         try:
             check_new_listings()
         except Exception as e:
