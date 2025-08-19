@@ -7,7 +7,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import InvalidSessionIdException, WebDriverException
 import config
 import time
-from webdriver_manager.chrome import ChromeDriverManager
 
 TARGET_RESIDENCES = [
     "CITE INTERNATIONALE", "CITE LUMINY", "CITE GALINAT", "RESIDENCE LES DOUANES",
@@ -27,10 +26,14 @@ def create_driver():
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--log-level=3")
 
-    service = Service(ChromeDriverManager().install())
+    # In the selenium/standalone-chromium image:
+    # Chromium and chromedriver are already in PATH
+    service = Service("/usr/bin/chromedriver")
+
     return webdriver.Chrome(service=service, options=options)
+    
+
 
 def check_new_listings():
     driver = None
